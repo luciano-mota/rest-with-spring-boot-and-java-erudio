@@ -1,13 +1,33 @@
 package br.com.project.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Person {
+@Entity
+@Table(name = "person")
+public class Person implements Serializable {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@Column(name = "first_name", nullable = false, length = 80)
 	private String firstName;
+
+	@Column(name = "last_name", nullable = false, length = 80)
 	private String lastName;
-	private String adress;
+
+	@Column(nullable = false, length = 101)
+	private String address;
+
+	@Column(nullable = false, length = 6)
 	private String gender;
 	
 	public Person() {
@@ -19,7 +39,7 @@ public class Person {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.adress = adress;
+		this.address = adress;
 		this.gender = gender;
 	}
 
@@ -47,12 +67,12 @@ public class Person {
 		this.lastName = lastName;
 	}
 
-	public String getAdress() {
-		return adress;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setAdress(String adress) {
-		this.adress = adress;
+	public void setAddress(String adress) {
+		this.address = adress;
 	}
 
 	public String getGender() {
@@ -65,7 +85,7 @@ public class Person {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(adress, firstName, gender, id, lastName);
+		return Objects.hash(address, firstName, gender, id, lastName);
 	}
 
 	@Override
@@ -77,7 +97,7 @@ public class Person {
 		if (getClass() != obj.getClass())
 			return false;
 		Person other = (Person) obj;
-		return Objects.equals(adress, other.adress) && Objects.equals(firstName, other.firstName)
+		return Objects.equals(address, other.address) && Objects.equals(firstName, other.firstName)
 				&& Objects.equals(gender, other.gender) && Objects.equals(id, other.id)
 				&& Objects.equals(lastName, other.lastName);
 	}
