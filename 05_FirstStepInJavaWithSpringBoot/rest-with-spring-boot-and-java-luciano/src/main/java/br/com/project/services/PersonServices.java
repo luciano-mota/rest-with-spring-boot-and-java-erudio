@@ -3,7 +3,6 @@ package br.com.project.services;
 import br.com.project.data.vo.v1.PersonVO;
 import br.com.project.data.vo.v2.PersonVOV2;
 import br.com.project.exceptions.ResourceNotFoundException;
-import br.com.project.mapper.DozerMapper;
 import br.com.project.mapper.custom.PersonMapper;
 import br.com.project.model.Person;
 import br.com.project.repositories.PersonRepository;
@@ -19,7 +18,7 @@ import static br.com.project.mapper.DozerMapper.parseObject;
 @Service
 public class PersonServices {
 
-	private Logger logger = Logger.getLogger(PersonServices.class.getName());
+	private final Logger logger = Logger.getLogger(PersonServices.class.getName());
 
 	@Autowired
 	private PersonRepository repository;

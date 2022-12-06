@@ -1,8 +1,11 @@
 package br.com.project.data.vo.v1;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@JsonPropertyOrder({"id", "address", "firstName", "lastName", "gender"})
 public class PersonVO implements Serializable {
     private Long id;
     private String firstName;
@@ -14,12 +17,12 @@ public class PersonVO implements Serializable {
 
     }
 
-    public PersonVO(Long id, String firstName, String lastName, String adress, String gender) {
+    public PersonVO(Long id, String firstName, String lastName, String address, String gender) {
         super();
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.address = adress;
+        this.address = address;
         this.gender = gender;
     }
 
@@ -51,8 +54,8 @@ public class PersonVO implements Serializable {
         return address;
     }
 
-    public void setAddress(String adress) {
-        this.address = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getGender() {

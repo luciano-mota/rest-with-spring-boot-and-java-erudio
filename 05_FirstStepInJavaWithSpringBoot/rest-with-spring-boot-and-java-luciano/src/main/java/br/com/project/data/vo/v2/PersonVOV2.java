@@ -16,12 +16,12 @@ public class PersonVOV2 implements Serializable {
 
     }
 
-    public PersonVOV2(Long id, String firstName, String lastName, String adress, String gender) {
+    public PersonVOV2(Long id, String firstName, String lastName, String address, String gender) {
         super();
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.address = adress;
+        this.address = address;
         this.gender = gender;
     }
 
@@ -53,8 +53,8 @@ public class PersonVOV2 implements Serializable {
         return address;
     }
 
-    public void setAddress(String adress) {
-        this.address = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getGender() {
