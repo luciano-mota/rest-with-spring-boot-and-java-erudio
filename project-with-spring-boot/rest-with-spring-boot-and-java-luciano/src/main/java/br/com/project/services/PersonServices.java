@@ -1,5 +1,6 @@
 package br.com.project.services;
 
+import br.com.project.controllers.PersonController;
 import br.com.project.data.vo.v1.PersonVO;
 import br.com.project.data.vo.v2.PersonVOV2;
 import br.com.project.exceptions.ResourceNotFoundException;
@@ -14,6 +15,8 @@ import java.util.logging.Logger;
 
 import static br.com.project.mapper.DozerMapper.parseListObjects;
 import static br.com.project.mapper.DozerMapper.parseObject;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class PersonServices {
@@ -28,7 +31,9 @@ public class PersonServices {
 
 	public List<PersonVO> findAll() {
 		logger.info("Finding all people");
-		return parseListObjects(repository.findAll(), PersonVO.class);
+		List<PersonVO> persons = parseListObjects(repository.findAll(), PersonVO.class);
+		persons.forEach(p -> p.add(linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()));
+		return persons;
 	}
 
 	public PersonVO findById(Long id) {
@@ -36,7 +41,9 @@ public class PersonServices {
 		Person entity = repository.findById(id).orElseThrow(
 				() -> new ResourceNotFoundException("No records found fot his ID!"));
 
-		return parseObject(entity, PersonVO.class);
+		PersonVO vo = parseObject(entity, PersonVO.class);
+		vo.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
+		return vo;
 	}
 
 	public PersonVO create(PersonVO person) {
@@ -53,7 +60,7 @@ public class PersonServices {
 
 	public PersonVO update(PersonVO person) {
 		logger.info("Updating one person");
-		Person entity = repository.findById(person.getId()).orElseThrow(
+		Person entity = repository.findById(person.getKey()).orElseThrow(
 				() -> new ResourceNotFoundException("No records found fot his ID!"));
 
 		entity.setFirstName(person.getFirstName());
